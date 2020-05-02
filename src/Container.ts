@@ -1,8 +1,10 @@
 import {Container} from 'unstated-x'
+import {v4 as uuid} from 'uuid';
 
 const rawData = {
     data: [
         {
+
             type: "img",
             index: 0,
             linkImage: 'https://www.google.com/search?q=img+test&rlz=1C5CHFA_enVN896VN896&sxsrf=ALeKk02jJXvTmjg58Dav_8btvagMLsy1xQ:1588419245166&tbm=isch&source=iu&ictx=1&fir=Dd6UXRHiSMfBpM%253A%252C3WpOoADRXuLM-M%252C_&vet=1&usg=AI4_-kT3ouueuzKKHSPozvh-WsdqbPUR4w&sa=X&ved=2ahUKEwjd7vLmipXpAhX-yosBHXpqAN4Q9QEwAHoECAoQFA#imgrc=Dd6UXRHiSMfBpM:'
@@ -57,7 +59,7 @@ const rawData = {
         },
         {type: 'text', index: 8, label: '534h2354345ihidfv'},
     ],
-    count: 16
+    count: 0
 }
 
 class BaseContainer extends Container<{ data: any, count: number }> {
@@ -67,8 +69,27 @@ class BaseContainer extends Container<{ data: any, count: number }> {
         this.state = props
     }
 
+    async getData() {
+        rawData.data = rawData.data.map(item => ({...item, ...{fliped: false, id: uuid()}}))
+        return await this.setState(rawData)
+    }
+
+    flipCard(id) {
+        const {count, data} = this.state
+        const infoCardChoose = data.map(cardInfo => {
+            // if(count == 2)  {
+            //     return {...cardInfo  , ...{fliped : false}}
+            // }
+            if (cardInfo.id === id) {
+                return {...cardInfo, ...{fliped: !cardInfo.fliped}}
+            }
+            return cardInfo
+        })
+        this.setState({data: infoCardChoose, count: count + 1})
+
+    }
 }
 
-export const gameContainer: any = new BaseContainer(rawData)
+export const gameContainer: any = new BaseContainer({})
 window['game'] = gameContainer
 export default BaseContainer

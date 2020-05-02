@@ -5,14 +5,20 @@ import {gameContainer} from "./Container";
 import styled from 'styled-components'
 
 class FrontGame extends React.Component<any, any> {
+    async componentDidMount() {
+        await gameContainer.getData()
+    }
 
     render() {
         return <Subscribe to={[gameContainer]}>
             {
-                () => {
+                container => {
+                    if (!container.state.data) {
+                        return 'loading ...'
+                    }
                     return <WrapperFrontGame>
-                        {gameContainer.state.data.map(item => {
-                            return <Card/>
+                        {container.state.data.map(item => {
+                            return <Card    {...item}/>
                         })}
                     </WrapperFrontGame>
                 }}
@@ -22,8 +28,9 @@ class FrontGame extends React.Component<any, any> {
 }
 
 const WrapperFrontGame = styled.div`
-      display: grid;
+   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
+  width  : 300px;
 `
 export default FrontGame

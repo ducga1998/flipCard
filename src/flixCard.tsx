@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
+import {ImageCard} from './Card';
 
 interface CardFlipState {
     cardStyles: any
@@ -11,6 +12,11 @@ interface CardFlipState {
     infinite: boolean
     isFlipped: boolean
     children: any
+    handleEvent: (e ?: any) => any
+    type: 'img' | 'text'
+    linkImage?: string
+    label?: string
+    index?: number
 }
 
 const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
@@ -31,20 +37,22 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
     const [rotation, setRotation] = useState(0);
 
     useEffect(() => {
+        console.log("props", props)
         if (props.isFlipped !== isFlipped) {
             setFlipped(props.isFlipped);
             setRotation((c) => c + 180);
         }
     }, [props.isFlipped]);
 
-    const getComponent = (key: 0 | 1) => {
-        if (props.children.length !== 2) {
-            throw new Error(
-                'Component ReactCardFlip requires 2 children to function',
-            );
-        }
-        return props.children[key];
-    };
+    // const getComponent = (key: 0 | 1) => {
+    //     if (props.children.length !== 2) {
+    //         throw new Error(
+    //             'Component ReactCardFlip requires 2 children to function',
+    //         );
+    //     }
+    //     console.log("props.children",props.children)
+    //     return props.children[key];
+    // };
 
     const frontRotateY = `rotateY(${
         infinite ? rotation : isFlipped ? 180 : 0
@@ -76,8 +84,8 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
         container: {
             perspective: '1000px',
             zIndex: `${cardZIndex}`,
-            width: '30p',
-            height: '30px'
+            width: '60px',
+            // height: '30px'
         },
         flipper: {
             height: '100%',
@@ -99,18 +107,24 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
             ...front,
         },
     };
-
+    console.log("props.type  === ", props, props.type === "img", props.label)
     return (
         <div
             style={{...styles.container, ...containerStyle}}
         >
             <div style={styles.flipper}>
                 <div style={styles.front}>
-                    {getComponent(0)}
+                    <ImageCard style={styles.card} onClick={props.handleEvent}>
+                        <img
+                            src="defaultCard.png"
+                        />
+                    </ImageCard>
                 </div>
 
                 <div style={styles.back}>
-                    {getComponent(1)}
+                    <ImageCard style={styles.card} onClick={props.handleEvent}>
+                        {props.type === "img" ? <img src={props.linkImage}/> : <label>{props.label}</label>}
+                    </ImageCard>
                 </div>
             </div>
         </div>

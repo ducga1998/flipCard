@@ -15,7 +15,8 @@
     "react-scripts": "3.4.1",
     "styled-components": "^5.1.0",
     "typescript": "~3.7.2",
-    "unstated-x": "^1.0.1"
+    "unstated-x": "^1.0.1",
+    "uuid": "^8.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/uuid": "^7.0.3"
   }
 }

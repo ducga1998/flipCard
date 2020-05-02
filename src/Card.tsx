@@ -1,61 +1,66 @@
 import React, {Component} from 'react';
 
 import ReactCardFlip from './flixCard';
+import styled from 'styled-components'
+import {gameContainer} from "./Container";
 
 const styles = {
     card: {
-        border: '1px solid #eeeeee',
-        borderRadius: '3px',
-        padding: '15px',
-        width: '30px'
+        width: '60px',
     },
     image: {
-        height: '30px',
-        width: '30px',
+        // height: '30px',
+        width: '60px'
     }
 };
 
-class Card extends Component<any, any> {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isFlipped: false
-        };
-    }
+interface CardProps {
+    type: 'text' | 'img'
+    linkImage?: string
+    label: string
+    index?: number
+    fliped?: boolean
+    id: string
+}
 
+class Card extends Component<CardProps, any> {
+    state = {
+        isFlipped: false,
+        count: 0
+    }
     handleClick = (event) => {
-        event.preventDefault();
-        this.setState(prevState => ({isFlipped: !prevState.isFlipped}));
+        gameContainer.flipCard(this.props.id)
+        // this.setState(prevState => ({isFlipped: !prevState.isFlipped , count : prevState.count ++ }));
     }
 
     componentDidMount(): void {
-        // window['duc'] =  this
+        console.log("this.props", this.props)
+    }
+
+    componentDidUpdate(prevProps: Readonly<CardProps>, prevState: Readonly<any>, snapshot?: any): void {
+        if (this.state.count == 2) {
+
+        }
     }
 
     render() {
+        const {type, linkImage, label, fliped} = this.props
         return (
-            <ReactCardFlip isFlipped={this.state.isFlipped}>
-                <div style={styles.card}>
-                    <img
-                        onClick={this.handleClick}
-                        style={styles.image}
-                        src="//static.pexels.com/photos/59523/pexels-photo-59523.jpeg"
-                    />
-                </div>
-                <div style={styles.card}>
-                    <img
+            <ReactCardFlip isFlipped={fliped} handleEvent={this.handleClick} {...this.props} />
 
-                        onClick={this.handleClick}
-                        style={styles.image}
-                        src="//img.buzzfeed.com/buzzfeed-static/static/2014-04/enhanced/webdr06/4/16/enhanced-11136-1396643149-13.jpg?no-auto"
-                    />
-
-                </div>
-            </ReactCardFlip>
         );
     }
 }
 
+export const ImageCard = styled.div`
+ cursor: pointer;
+ border: 1px solid #eeeeee;
+ border-radius: 3px;
+ padding: 15px;
+ img {
+  width: 60px;
+ }
+`
 export default Card;
 
 //define props  : text and image  =>
