@@ -55,9 +55,12 @@ class Card extends Component<CardProps, any> {
 
 export const ImageCard = styled.div`
  cursor: pointer;
- border: 1px solid #eeeeee;
  border-radius: 3px;
  padding: 15px;
+ display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
  img {
   width: 60px;
  }

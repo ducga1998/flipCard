@@ -63,7 +63,6 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
 
     const styles: any = {
         back: {
-            WebkitBackfaceVisibility: 'hidden',
             backfaceVisibility: 'hidden',
             height: '100%',
             left: '0',
@@ -87,7 +86,6 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
             width: '100%',
         },
         front: {
-            WebkitBackfaceVisibility: 'hidden',
             backfaceVisibility: 'hidden',
             height: '100%',
             left: '0',
@@ -117,7 +115,7 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
 
                 <div style={styles.back}>
                     <ImageCard style={styles.card} onClick={props.handleEvent}>
-                        {props.type === "img" ? <Image srcData={props.linkImage}/> : <label>{props.label}</label>}
+                        {props.type === "img" ? <Image srcData={props.linkImage}/> : <div>{props.label}</div>}
                     </ImageCard>
                 </div>
             </div>

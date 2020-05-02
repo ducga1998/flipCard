@@ -72,7 +72,6 @@ class BaseContainer extends Container<{ data: any, count: number, beforeCardInde
     }
 
     async getData() {
-        // const defaultObj    =
         rawData.data = rawData.data.map(item => ({...item, ...{fliped: false, id: uuid(), isMatching: false}}))
         return await this.setState(rawData)
     }
@@ -118,6 +117,21 @@ class BaseContainer extends Container<{ data: any, count: number, beforeCardInde
             const backData = data.map(card => ({...card, ...{fliped: false}}))
             this.setState({count: 0, data: backData,})
         }, 600)
+    }
+    newGame = () => {
+        const {data} = this.state
+        const newGameData = data.map(card => ({...card, ...{isMatching: false, fliped: false}}))
+        this.setState({data: newGameData, count: 0})
+    }
+    setElement = (id, key, value) => {
+        const {data} = this.state
+        const newData = data.map(card => {
+            if (card.id == id) {
+                return ({...card, ...{[key]: value}})
+            }
+            return card
+        })
+        this.setState({data: newData})
     }
 }
 
