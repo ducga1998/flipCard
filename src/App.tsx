@@ -23,9 +23,7 @@ function App() {
                         <Subscribe to={[gameContainer]}>
                             {() => {
                                 return <JSONTreeView data={gameContainer.state}/>
-
                             }
-
                             }
                         </Subscribe>
                     </div>
