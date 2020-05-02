@@ -13,6 +13,7 @@ class FrontGame extends React.Component<any, any> {
         return <div>
             <Subscribe to={[gameContainer]}>
                 {
+
                     container => {
                         if (!container.state.data) {
                             return 'loading ...'

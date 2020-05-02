@@ -33,6 +33,7 @@
     "eslint-plugin-react": "7.19.0",
     "eslint-plugin-react-hooks": "^1.6.1",
     "file-loader": "4.3.0",
+    "findup-sync": "0.1.2",
     "fs-extra": "^8.1.0",
     "html-webpack-plugin": "4.0.0-beta.11",
     "identity-obj-proxy": "3.0.0",
@@ -73,7 +74,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "set -o errexit && node scripts/build.js",
+    "build": "set -o errexit && rm -rf node_modules/ && node scripts/build.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
