@@ -1,8 +1,19 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
+interface CardFlipState {
+    cardStyles: any
+    cardZIndex: string,
+    containerStyle: any,
+    flipDirection: string,
+    flipSpeedBackToFront: number,
+    flipSpeedFrontToBack: number,
+    infinite: boolean
+    isFlipped: boolean
+    children: any
+}
 
-const ReactCardFlip: React.FC<any> = (props) => {
+const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
     const {
         cardStyles: {
             back,
@@ -65,6 +76,8 @@ const ReactCardFlip: React.FC<any> = (props) => {
         container: {
             perspective: '1000px',
             zIndex: `${cardZIndex}`,
+            width: '30p',
+            height: '30px'
         },
         flipper: {
             height: '100%',
@@ -89,15 +102,14 @@ const ReactCardFlip: React.FC<any> = (props) => {
 
     return (
         <div
-            className="react-card-flip"
-            style={{ ...styles.container, ...containerStyle }}
+            style={{...styles.container, ...containerStyle}}
         >
-            <div className="react-card-flipper" style={styles.flipper}>
-                <div className="react-card-front" style={styles.front}>
+            <div style={styles.flipper}>
+                <div style={styles.front}>
                     {getComponent(0)}
                 </div>
 
-                <div className="react-card-back" style={styles.back}>
+                <div style={styles.back}>
                     {getComponent(1)}
                 </div>
             </div>
