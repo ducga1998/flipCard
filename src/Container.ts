@@ -67,7 +67,6 @@ const rawData = {
     ],
     count: 0,
     beforeCardIndex: -1,
-    afterCardIndex: -1
 }
 
 class BaseContainer extends Container<{ data: any, count: number, beforeCardIndex: number, afterCardIndex: number }> {

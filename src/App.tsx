@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
 // @ts-ignore
-import {Provider} from "unstated-x";
+import {Provider, Subscribe} from "unstated-x";
 import FrontGame from "./FrontGame";
 import BackGame from "./BackGame";
 import {gameContainer} from "./Container";
 import styled, {ThemeProvider} from 'styled-components'
 import theme from "./UI/them";
+import JSONTreeView from 'react-json-tree';
 
 function App() {
     React.useEffect(() => {
@@ -18,6 +19,16 @@ function App() {
                 <WrapperApp>
                     <FrontGame/>
                     <BackGame/>
+                    <div style={{width: '600px'}}>
+                        <Subscribe to={[gameContainer]}>
+                            {() => {
+                                return <JSONTreeView data={gameContainer.state}/>
+
+                            }
+
+                            }
+                        </Subscribe>
+                    </div>
                 </WrapperApp>
             </Provider>
         </ThemeProvider>
