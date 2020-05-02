@@ -21,6 +21,7 @@ interface CardProps {
     index?: number
     fliped?: boolean
     id: string
+    isMatching?: boolean
 }
 
 class Card extends Component<CardProps, any> {
@@ -29,7 +30,7 @@ class Card extends Component<CardProps, any> {
         count: 0
     }
     handleClick = (event) => {
-        gameContainer.flipCard(this.props.id)
+        gameContainer.flipCard(this.props)
         // this.setState(prevState => ({isFlipped: !prevState.isFlipped , count : prevState.count ++ }));
     }
 
@@ -44,10 +45,10 @@ class Card extends Component<CardProps, any> {
     }
 
     render() {
-        const {type, linkImage, label, fliped} = this.props
+        const {type, linkImage, label, fliped, isMatching} = this.props
         return (
-            <ReactCardFlip isFlipped={fliped} handleEvent={this.handleClick} {...this.props} />
-
+            <ReactCardFlip isMatching={isMatching} isFlipped={fliped || isMatching}
+                           handleEvent={this.handleClick} {...this.props} />
         );
     }
 }
@@ -60,6 +61,7 @@ export const ImageCard = styled.div`
  img {
   width: 60px;
  }
+ background: ${props => props.isMatching ? '#e6e6e6' : ''};
 `
 export default Card;
 

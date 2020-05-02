@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {ImageCard} from './Card';
+import styled from 'styled-components'
 
 interface CardFlipState {
     cardStyles: any
@@ -17,6 +18,7 @@ interface CardFlipState {
     linkImage?: string
     label?: string
     index?: number
+    isMatching?: boolean
 }
 
 const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
@@ -31,6 +33,7 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
         flipSpeedFrontToBack,
         flipSpeedBackToFront,
         infinite,
+        isMatching
     } = props;
 
     const [isFlipped, setFlipped] = useState(props.isFlipped);
@@ -44,15 +47,6 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
         }
     }, [props.isFlipped]);
 
-    // const getComponent = (key: 0 | 1) => {
-    //     if (props.children.length !== 2) {
-    //         throw new Error(
-    //             'Component ReactCardFlip requires 2 children to function',
-    //         );
-    //     }
-    //     console.log("props.children",props.children)
-    //     return props.children[key];
-    // };
 
     const frontRotateY = `rotateY(${
         infinite ? rotation : isFlipped ? 180 : 0
@@ -84,7 +78,7 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
         container: {
             perspective: '1000px',
             zIndex: `${cardZIndex}`,
-            width: '60px',
+            // width: '60px',
             // height: '30px'
         },
         flipper: {
@@ -107,9 +101,9 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
             ...front,
         },
     };
-    console.log("props.type  === ", props, props.type === "img", props.label)
     return (
-        <div
+        <WrapperCard
+            isMatching={isMatching}
             style={{...styles.container, ...containerStyle}}
         >
             <div style={styles.flipper}>
@@ -123,14 +117,24 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
 
                 <div style={styles.back}>
                     <ImageCard style={styles.card} onClick={props.handleEvent}>
-                        {props.type === "img" ? <img src={props.linkImage}/> : <label>{props.label}</label>}
+                        {props.type === "img" ? <Image srcData={props.linkImage}/> : <label>{props.label}</label>}
                     </ImageCard>
                 </div>
             </div>
-        </div>
+        </WrapperCard>
     );
 };
+const Image = styled.div`
+    background : url(${props => props.srcData ? props.srcData : '.defaultPlaceHolder.png'} );\
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    pointer-events: none;
+`
+const WrapperCard = styled.div`
 
+ background: ${props => props.isMatching ? '#b8efcb' : ''};
+`
 ReactCardFlip.defaultProps = {
     cardStyles: {
         back: {},
