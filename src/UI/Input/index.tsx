@@ -2,6 +2,7 @@ import React from 'react'
 import {InputWrapper} from './styled'
 import {InputProps} from './types'
 import UIButton from '../Button'
+import _debounce from 'lodash/debounce'
 
 const UIInput = React.forwardRef<any, InputProps>((props, ref) => {
     const {
@@ -46,7 +47,7 @@ const UIInput = React.forwardRef<any, InputProps>((props, ref) => {
             type={type || 'text'}
             disabled={!!disabled}
             placeholder={placeholder}
-            onChange={onChange ? (e => onChange(e.target.value)) : undefined}
+            onChange={onChange ? (e => _debounce(() => onChange(e.target.value), 1000)) : undefined}
             {...passProps}
         />
         {

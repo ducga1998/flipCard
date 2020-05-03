@@ -67,9 +67,22 @@ const rawData = {
     ],
     count: 0,
     beforeCardIndex: -1,
+    color: 'white',
+    backgroundDefaultCard: 'defaultCard'
 }
 
-class BaseContainer extends Container<{ data: any, count: number, beforeCardIndex: number, afterCardIndex: number }> {
+class BaseContainer extends Container<{ test: string }> {
+    constructor(props) {
+        super(props);
+    }
+
+    setState<K extends keyof any>(state: ((prevState: Readonly<any>) => (Partial<any> | any | null)) | Partial<any> | any | null, callback?: () => void): Promise<void> {
+
+        return super.setState(state, callback);
+    }
+}
+
+class GameContainer extends Container<{ data: any, count: number, beforeCardIndex: number, afterCardIndex: number }> {
     constructor(props) {
         super(props);
         console.log('props ', props)
@@ -140,6 +153,6 @@ class BaseContainer extends Container<{ data: any, count: number, beforeCardInde
     }
 }
 
-export const gameContainer: any = new BaseContainer({})
+export const gameContainer: any = new GameContainer({})
 window['game'] = gameContainer
-export default BaseContainer
+export default GameContainer
