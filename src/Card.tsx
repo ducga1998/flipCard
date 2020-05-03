@@ -63,6 +63,7 @@ export const ImageCard = styled.div`
     text-align: center;
  img {
   width: 60px;
+  height: 60px;
  }
  background: ${props => props.isMatching ? '#e6e6e6' : ''};
 `

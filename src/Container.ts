@@ -68,7 +68,7 @@ const rawData = {
     count: 0,
     beforeCardIndex: -1,
     color: 'white',
-    backgroundDefaultCard: 'defaultCard'
+    backgroundDefaultCard: 'defaultCard.png'
 }
 
 class BaseContainer extends Container<{ test: string }> {

@@ -2,6 +2,8 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {ImageCard} from './Card';
 import styled from 'styled-components'
+import {SubscribeOne} from "unstated-x";
+import {gameContainer} from "./Container";
 
 interface CardFlipState {
     cardStyles: any
@@ -19,6 +21,7 @@ interface CardFlipState {
     label?: string
     index?: number
     isMatching?: boolean
+    backgroundDefault?: string
 }
 
 const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
@@ -106,11 +109,15 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
         >
             <div style={styles.flipper}>
                 <div style={styles.front}>
-                    <ImageCard style={styles.card} onClick={props.handleEvent}>
-                        <img
-                            src="defaultCard.png"
-                        />
-                    </ImageCard>
+                    <SubscribeOne to={gameContainer} bind={['backgroundDefaultCard']}>
+                        {() => {
+                            return <ImageCard style={styles.card} onClick={props.handleEvent}>
+                                <img
+                                    src={gameContainer.state.backgroundDefaultCard || 'defaultCard.png'}
+                                />
+                            </ImageCard>
+                        }}
+                    </SubscribeOne>
                 </div>
 
                 <div style={styles.back}>

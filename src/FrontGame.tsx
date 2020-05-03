@@ -27,7 +27,7 @@ class FrontGame extends React.Component<any, any> {
 
             </Subscribe>
 
-            <SubscribeOne to={gameContainer} bind={['color']}>
+            <SubscribeOne to={gameContainer} bind={['color', 'backgroundDefaultCard']}>
                 {
                     () => {
                         return <>
@@ -36,6 +36,13 @@ class FrontGame extends React.Component<any, any> {
                                 color={item}
                                 active={item === gameContainer.state.color}/>)}</WrapperColor>
                             <UIButton onClick={() => gameContainer.newGame()}>new game</UIButton>
+                            <WrapperColor>
+                                {['defaultCard.png', 'defaultCard2.jpg', 'defaultCard3.jpg', 'defaultCard4.jpg'].map(cardImageLink =>
+                                    <Image
+                                        onClick={() => gameContainer.setState({backgroundDefaultCard: cardImageLink})}
+                                        active={gameContainer.state.backgroundDefaultCard === cardImageLink}
+                                        urlImg={`${cardImageLink}`}/>)}
+                            </WrapperColor>
                         </>
                     }
                 }
@@ -49,6 +56,15 @@ const WrapperColor = styled.div`
 display: flex;
 padding : 10px;
 background: #999999;
+`
+const Image = styled.div`
+width: 60px;
+height: 60px;
+border: 3px solid ${props => props.active ? 'black' : 'white'};
+background: url(${props => props.urlImg ? props.urlImg : ''});
+background-size: cover;
+cursor: pointer;
+margin : 3px;
 `
 const ButtonCir = styled.div`
 width: 30px;
