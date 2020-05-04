@@ -2,11 +2,24 @@ import _difference from 'lodash/difference'
 
 export const getArrayRandom = (parentArr, max, total) => {
     const arrRandom = []
-    for (let i = 0; i < total; i++) {
+    const arrIndex = []
+    while (true) {
+        if (arrRandom.length === total) {
+            break;
+        }
+
         const indexRandom = Math.floor(Math.random() * (max + 1));
-        const elementRandom = parentArr[indexRandom]
-        arrRandom.push(elementRandom)
+        if (!arrIndex.includes(indexRandom)) {
+            arrRandom.push(parentArr[indexRandom])
+
+        }
+        arrIndex.push(indexRandom)
     }
+    // for (let i = 0; i < total; i++) {
+    //     const indexRandom = Math.floor(Math.random() * (max + 1));
+    //     const elementRandom = parentArr[indexRandom]
+    //     arrRandom.push(elementRandom)
+    // }
     return arrRandom
 }
 
@@ -17,7 +30,6 @@ export function makeArrStringRanDom(length, excludeElementArray) {
     for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-
     return [..._difference(result.split(''), (excludeElementArray || [])), ...excludeElementArray];
 }
 

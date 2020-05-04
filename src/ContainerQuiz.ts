@@ -23,6 +23,9 @@ class QuizContainer extends Container<QuizState> {
     async generateGame() {
         const {countCharRandom, numberOfCrosswords, initString} = this.state
         console.log("initString", initString)
+        if (initString.length < countCharRandom) {
+            return alert("so luong chu choi phai lon hon so luong nham lan !")
+        }
         const initArrayGame = (initString).split('').map(char => ({char, id: uuid()}))
         const arrRandom = getArrayRandom(initArrayGame, initArrayGame.length, countCharRandom)
         console.log("arrRandom", arrRandom)
