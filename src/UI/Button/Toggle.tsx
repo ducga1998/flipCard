@@ -15,7 +15,7 @@ export interface Props extends IButtonProps {
 const UIButtonToggle = React.forwardRef<HTMLDivElement, Props>((props, ref) => {
 	const {value, onChange, on, off, children, ...rest} = props
 	const toggle = () => onChange && onChange(value === on ? off : on)
-	return (
+return (
 		<UIButton ref={ref} {...rest} active={value === on} onClick={toggle}>
 			{children}
 		</UIButton>

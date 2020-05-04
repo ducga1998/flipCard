@@ -68,7 +68,11 @@ const rawData = {
     count: 0,
     beforeCardIndex: -1,
     color: 'white',
-    backgroundDefaultCard: 'defaultCard.png'
+    backgroundDefaultCard: 'defaultCard.png',
+flipDirection: 'horizontal',
+    flipSpeedBackToFront: 0.6,
+    flipSpeedFrontToBack: 0.6,
+    infinite: false,
 }
 
 class BaseContainer extends Container<{ test: string }> {

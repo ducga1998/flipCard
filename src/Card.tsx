@@ -32,7 +32,7 @@ class Card extends Component<CardProps, any> {
     handleClick = (event) => {
         gameContainer.flipCard(this.props)
         // this.setState(prevState => ({isFlipped: !prevState.isFlipped , count : prevState.count ++ }));
-    }
+}
 
     componentDidMount(): void {
         console.log("this.props", this.props)

@@ -27,7 +27,7 @@ interface CardFlipState {
 const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
     const {
         cardStyles: {
-            back,
+    back,
             front,
         },
         cardZIndex,
@@ -60,7 +60,7 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
     const frontRotateX = `rotateX(${
         infinite ? rotation : isFlipped ? 180 : 0
     }deg)`;
-    const backRotateX = `rotateX(${
+const backRotateX = `rotateX(${
         infinite ? rotation + 180 : isFlipped ? 0 : -180
     }deg)`;
 
@@ -116,6 +116,7 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
                                     src={gameContainer.state.backgroundDefaultCard || 'defaultCard.png'}
                                 />
                             </ImageCard>
+
                         }}
                     </SubscribeOne>
                 </div>
@@ -130,7 +131,7 @@ const ReactCardFlip: React.FC<any> = (props: CardFlipState) => {
     );
 };
 const Image = styled.div`
-    background : url(${props => props.srcData ? props.srcData : '.defaultPlaceHolder.png'} );\
+    background : url(${props => props.srcData ? props.srcData : '.defaultPlaceHolder.png'} );
     width: 60px;
     height: 60px;
     background-size: cover;

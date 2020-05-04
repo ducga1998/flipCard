@@ -12,13 +12,18 @@ class FrontGame extends React.Component<any, any> {
                 {
 
                     container => {
-                        const {color} = gameContainer.state
+                        const {color , flipDirection , flipSpeedFrontToBack , flipSpeedBackToFront , infinite} = gameContainer.state
                         if (!container.state.data) {
                             return 'loading ...'
                         }
                         return <WrapperFrontGame color={color}>
                             {container.state.data.map(item => {
-                                return <Card    {...item}/>
+                                return <Card    {...item} 
+                                flipDirection={flipDirection}
+                                flipSpeedFrontToBack={flipSpeedFrontToBack}
+                                flipSpeedBackToFront={flipSpeedBackToFront}
+                                infinite={infinite}
+                                />
                             })}
 
                         </WrapperFrontGame>
