@@ -69,7 +69,7 @@ const rawData = {
     beforeCardIndex: -1,
     color: 'white',
     backgroundDefaultCard: 'defaultCard.png',
-flipDirection: 'horizontal',
+    flipDirection: 'horizontal',
     flipSpeedBackToFront: 0.6,
     flipSpeedFrontToBack: 0.6,
     infinite: false,
