@@ -1,10 +1,10 @@
 import React from "react";
-import {containerQuiz} from "./ContainerQuiz";
+import {containerQuiz} from "Store/ContainerQuiz";
 import {Subscribe} from "unstated-x";
 import styled from 'styled-components'
-import UIGroup from "./UI/Group";
-import UIInput from "./UI/Input";
-import UIButton from "./UI/Button";
+import UIGroup from "UI/Group";
+import UIInput from "UI/Input";
+import UIButton from "UI/Button";
 
 const Quiz = () => {
     const [value, setValue] = React.useState('')

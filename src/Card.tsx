@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import ReactCardFlip from './flixCard';
 import styled from 'styled-components'
-import {gameContainer} from "./Container";
+import {gameContainer} from "Store/Container";
 
 const styles = {
     card: {

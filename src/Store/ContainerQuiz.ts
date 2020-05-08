@@ -1,5 +1,5 @@
 import {Container} from 'unstated-x'
-import {getArrayRandom, makeArrStringRanDom, shuffleElementInArray} from "./util";
+import {getArrayRandom, makeArrStringRanDom, shuffleElementInArray} from "../util";
 import {v4 as uuid} from 'uuid';
 
 interface QuizState {
@@ -33,8 +33,11 @@ class QuizContainer extends Container<QuizState> {
         await this.setState({arrRandom, initArrayGame, arrayCrosswords})
     }
 
+    newGame = () => {
+
+    }
     async checkMatchingChar(char) {
-        let {selected, initArrayGame, countWrong, arrRandom} = this.state
+        let {selected, initArrayGame, countWrong, arrRandom, arrayCrosswords} = this.state
         console.log("selected", selected)
         if (selected) {
             console.log(selected, char)
@@ -47,10 +50,16 @@ class QuizContainer extends Container<QuizState> {
 
                     return item
                 })
+
+                const newArrayCrosswords = arrayCrosswords.filter(item => item !== char)
                 if ((countWrong + 1) === arrRandom.length) {
                     alert("win game : ))")
                 }
-                await this.setState({initArrayGame: newData, countWrong: countWrong + 1})
+                await this.setState({
+                    initArrayGame: newData,
+                    arrayCrosswords: newArrayCrosswords,
+                    countWrong: countWrong + 1
+                })
             } else {
                 alert('sai roi nha em : )))')
             }

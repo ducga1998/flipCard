@@ -1,22 +1,23 @@
 import * as React from "react";
-import { Subscribe } from "unstated-x";
-import { gameContainer } from "./Container";
+import {Subscribe} from "unstated-x";
+import {gameContainer} from "Store/Container";
 import styled from "styled-components";
-import UIInput from "./UI/Input";
-import UIGrid from "./UI/Grid";
-import UIGroup from "./UI/Group";
-import UIToggle from "./UI/Button/Toggle";
-import UILabel from "./UI/Label";
-import UISwitch from "./UI/Switch";
+import UIInput from "UI/Input";
+import UIGrid from "UI/Grid";
+import UIGroup from "UI/Group";
+import UIToggle from "UI/Button/Toggle";
+import UILabel from "UI/Label";
+import UISwitch from "UI/Switch";
+
 class BackGame extends React.Component<any, any> {
   render() {
     return (
-      <Subscribe to={[gameContainer]}>
-        {(container) => {
-          const {
-            color,
-            flipDirection,
-            flipSpeedFrontToBack,
+        <Subscribe to={[gameContainer]}>
+          {(container) => {
+            const {
+              color,
+              flipDirection,
+              flipSpeedFrontToBack,
             flipSpeedBackToFront,
             infinite,
           } = container.state;
@@ -101,7 +102,7 @@ class BackGame extends React.Component<any, any> {
                 />
               </UIGrid>
               </WrapperBackGame>
-             
+
             </>
           );
         }}

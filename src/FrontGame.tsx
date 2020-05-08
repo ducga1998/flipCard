@@ -1,9 +1,9 @@
 import * as React from 'react'
 import Card from "./Card";
 import {Subscribe, SubscribeOne} from "unstated-x";
-import {gameContainer} from "./Container";
+import {gameContainer} from "Store/Container";
 import styled from 'styled-components'
-import UIButton from "./UI/Button";
+import UIButton from "UI/Button";
 
 class FrontGame extends React.Component<any, any> {
     render() {
@@ -18,11 +18,11 @@ class FrontGame extends React.Component<any, any> {
                         }
                         return <WrapperFrontGame color={color}>
                             {container.state.data.map(item => {
-                                return <Card    {...item} 
-                                flipDirection={flipDirection}
-                                flipSpeedFrontToBack={flipSpeedFrontToBack}
-                                flipSpeedBackToFront={flipSpeedBackToFront}
-                                infinite={infinite}
+                                return <Card    {...item}
+                                                flipDirection={flipDirection}
+                                                flipSpeedFrontToBack={flipSpeedFrontToBack}
+                                                flipSpeedBackToFront={flipSpeedBackToFront}
+                                                infinite={infinite}
                                 />
                             })}
 

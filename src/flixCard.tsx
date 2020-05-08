@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {ImageCard} from './Card';
 import styled from 'styled-components'
 import {SubscribeOne} from "unstated-x";
-import {gameContainer} from "./Container";
+import {gameContainer} from "Store/Container";
 
 interface CardFlipState {
     cardStyles: any

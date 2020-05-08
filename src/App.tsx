@@ -5,11 +5,11 @@ import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 import {Provider} from "unstated-x";
 import FrontGame from "./FrontGame";
 import BackGame from "./BackGame";
-import {gameContainer} from "./Container";
+import {gameContainer} from "Store/Container";
 import styled, {ThemeProvider} from 'styled-components'
-import theme from "./UI/them";
+import theme from "UI/them";
 import Quiz from './Quiz'
-
+import Kahoot from './Kahoot'
 
 function App() {
     React.useEffect(() => {
@@ -29,6 +29,9 @@ function App() {
                             <li>
                                 <Link to="/quiz">Quiz</Link>
                             </li>
+                            <li>
+                                <Link to="/kahoot">Kahoot</Link>
+                            </li>
                         </ul>
 
                         <Switch>
@@ -37,6 +40,9 @@ function App() {
                             </Route>
                             <Route path="/quiz">
                                 <Quiz/>
+                            </Route>
+                            <Route path="/kahoot">
+                                <Kahoot/>
                             </Route>
                         </Switch>
                     </div>
