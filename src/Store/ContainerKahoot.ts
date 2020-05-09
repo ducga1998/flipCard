@@ -28,10 +28,7 @@ class KahootContainer extends Container<{ questions: any[] }> {
 }
 
 export const containerKahoot: any = new KahootContainer({
-    countCharRandom: 6,
-    numberOfCrosswords: 8,
-    initString: '',
-    countWrong: 0
+  questions: []
 })
 window['kahoot'] = containerKahoot
 export default KahootContainer

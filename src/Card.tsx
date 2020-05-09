@@ -32,7 +32,7 @@ class Card extends Component<CardProps, any> {
     handleClick = (event) => {
         gameContainer.flipCard(this.props)
         // this.setState(prevState => ({isFlipped: !prevState.isFlipped , count : prevState.count ++ }));
-}
+    }
 
     componentDidMount(): void {
         console.log("this.props", this.props)
@@ -64,6 +64,7 @@ export const ImageCard = styled.div`
  img {
   width: 60px;
   height: 60px;
+  pointer-events: none;
  }
  background: ${props => props.isMatching ? '#e6e6e6' : ''};
 `

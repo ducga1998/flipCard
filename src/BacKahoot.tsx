@@ -2,25 +2,19 @@ import React from "react";
 import styled from 'styled-components'
 import {Subscribe} from "unstated-x";
 import {containerKahoot} from "Store/ContainerKahoot";
-import ContentEditable from 'UI/CotentEditTable'
 
-const Kahoot = () => {
-
+const BackKahoot = () => {
 
     return <Subscribe to={[containerKahoot]}>
         {
+            () => {
+                return <WrapperBottom>
 
-            container => {
-                const {answer} = container.state
-                return <div>
-                    <ContentEditable
-                        onKeyPress={e => console.log(e)}
-                        onChange={e => console.log(e)}
-                    />
-                </div>
+                    {}
+
+                </WrapperBottom>
             }
         }
-
     </Subscribe>
 
 }
@@ -41,4 +35,4 @@ border-radius:  2px;
 cursor: pointer;
 border : ${props => props.selected ? '2px solid #007eff ' : '2px solid black'}
 `
-export default Kahoot
+export default BackKahoot
