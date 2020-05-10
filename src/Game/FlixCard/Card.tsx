@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import ReactCardFlip from './flixCard';
+import ReactCardFlip from './index';
 import styled from 'styled-components'
 import {gameContainer} from "Store/Container";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import styled from 'styled-components'
 import {Subscribe} from "unstated-x";
 import KahootContainerQuestion from "Store/ContainerKahoot";
 import ContentEditable from 'UI/ContentEditTable'
@@ -10,16 +9,13 @@ import UIInput from "UI/Input";
 import UILabel from "UI/Label";
 import UIButton from 'UI/Button'
 import {ICONS} from "UI/Icon";
-import ContainerLevel from "../Store/ContainerLevel";
-import SortableItemList from "../demo/sortable";
+import ContainerLevel from "../../Store/ContainerLevel";
+import {UIPane} from "../../demo/sortable";
 import SortableList from "UI/List/SortableList";
 import UIList from "UI/List";
-import UIText from "UI/Text";
 import {v4 as uuid} from "uuid";
-import {UIPane} from "../demo/sortable";
-import UIModal from "UI/Modal";
-import ModelPreview from "./modelPreview";
-import {IN_ORDER_COLOR, IN_ORDER_ICON} from "../util";
+import ModelPreview from "./ModelPreview";
+import {IN_ORDER_COLOR, IN_ORDER_ICON} from "../../util";
 import {ItemLevel, WrapperAnswer, WrapperContent, WrapperCreateQuestion, WrapperKahoot, WrapperLevel} from './styled';
 
 
@@ -40,7 +36,7 @@ const Index = () => {
             imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
         })
         await levelContainer.createLevel(containerQuestion)
-        levelContainer.selectLevel(containerQuestion)
+        await levelContainer.selectLevel(containerQuestion)
         await setOpenGame(true)
     }
     const handleAddLevel = async  () => {

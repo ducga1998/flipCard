@@ -3,13 +3,13 @@ import './App.css';
 import {BrowserRouter as Router, Link, Route, Switch} from "react-router-dom";
 // @ts-ignore
 import {Provider} from "unstated-x";
-import FrontGame from "./FrontGame";
-import BackGame from "./BackGame";
+import FrontGame from "./Game/FlixCard/FrontGame";
+import BackGame from "./Game/FlixCard/BackGame";
 import {gameContainer} from "Store/Container";
 import styled, {ThemeProvider} from 'styled-components'
 import theme from "UI/them";
-import Quiz from './Quiz'
-import Kahoot from './Kahoot'
+import Quiz from './Game/Quiz/Quiz'
+import Kahoot from './Game/Kahoot'
 
 function App() {
     React.useEffect(() => {

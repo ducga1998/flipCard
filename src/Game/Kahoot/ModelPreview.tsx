@@ -1,7 +1,7 @@
 import React from "react";
-import styled from 'styled-components'
-import UIModal from "../UI/Modal";
+import UIModal from "../../UI/Modal";
 import {Subscribe} from "unstated-x";
+
 const ModelPreview = ({isOpen  ,setOpen , selectContainer}) => {
     if(!selectContainer)  return null
         console.log("selectContainer",selectContainer)
