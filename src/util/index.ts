@@ -49,3 +49,5 @@ export function shuffleElementInArray(array) {
 
     return array;
 }
+export const IN_ORDER_COLOR = ['rgb(226, 27, 60)', 'rgb(19, 104, 206)', 'rgb(216, 158, 0)', 'rgb(38, 137, 12)']
+export const IN_ORDER_ICON = ['triangle', 'diamond', 'circle', 'square']

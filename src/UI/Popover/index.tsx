@@ -95,7 +95,7 @@ export default class UIPopover extends React.Component<IProps, IState> {
         if (prevState.open !== this.state.open) {
             this.popper.popper = this.state.open ? this.popupRef.current : this.dummy
             this.handleUpdate()
-            // console.log(window.scrollY)
+            console.log(window.scrollY)
         }
     }
 

@@ -12,7 +12,6 @@ interface QuizState {
     initString: string
     countWrong: number
 }
-
 class QuizContainer extends Container<QuizState> {
     constructor(props) {
         super(props);
@@ -38,7 +37,6 @@ class QuizContainer extends Container<QuizState> {
     }
     async checkMatchingChar(char) {
         let {selected, initArrayGame, countWrong, arrRandom, arrayCrosswords} = this.state
-        console.log("selected", selected)
         if (selected) {
             console.log(selected, char)
             if (selected.char === char) {

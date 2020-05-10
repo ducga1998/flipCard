@@ -1,21 +1,11 @@
 import React from "react";
 import styled from 'styled-components'
 import {Subscribe} from "unstated-x";
-import {containerKahoot} from "Store/ContainerKahoot";
+// import {containerKahootQuestion} from "Store/ContainerKahoot";
 
 const BackKahoot = () => {
 
-    return <Subscribe to={[containerKahoot]}>
-        {
-            () => {
-                return <WrapperBottom>
-
-                    {}
-
-                </WrapperBottom>
-            }
-        }
-    </Subscribe>
+    return null
 
 }
 const WrapperBottom = styled.div`

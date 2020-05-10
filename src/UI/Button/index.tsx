@@ -14,7 +14,7 @@ import {
 } from './styled'
 import {IButtonProps} from './types'
 
-// import Icon from 'UI/Icon'
+import Icon from 'UI/Icon'
 
 const UIButton = React.forwardRef<HTMLElement, IButtonProps>((props, ref) => {
     const {variant, disabled, loading, children, iconBefore, iconAfter, size, onClick} = props
@@ -59,12 +59,12 @@ const UIButton = React.forwardRef<HTMLElement, IButtonProps>((props, ref) => {
     return (
         <ButtonComponent ref={ref} {...props} loading={loading ? loading.toString() : undefined} disabled={disabled}
                          onClick={onClick}>
-            {/*{loading && !disabled && (*/}
-            {/*	// <Icon icon='loading' size={size === 'small' ? 'tiny' : 'small'}/>*/}
-            {/*)}*/}
-            {/*{iconBefore && <Icon icon={iconBefore} size={size === 'small' ? 'tiny' : 'small'}/>}*/}
+            {loading && !disabled && (
+            	<Icon icon='loading' size={size === 'small' ? 'tiny' : 'small'}/>
+            )}
+            {iconBefore && <Icon icon={iconBefore} size={size === 'small' ? 'tiny' : 'small'}/>}
             {children}
-            {/*{iconAfter && <Icon icon={iconAfter} size={size === 'small' ? 'tiny' : 'small'}/>}*/}
+            {iconAfter && <Icon icon={iconAfter} size={size === 'small' ? 'tiny' : 'small'}/>}
         </ButtonComponent>
     )
 })

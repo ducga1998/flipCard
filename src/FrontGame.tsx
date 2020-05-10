@@ -11,6 +11,7 @@ class FrontGame extends React.Component<any, any> {
             <Subscribe to={[gameContainer]}>
                 {
 
+
                     container => {
                         const {color , flipDirection , flipSpeedFrontToBack , flipSpeedBackToFront , infinite} = gameContainer.state
                         if (!container.state.data) {
@@ -29,6 +30,7 @@ class FrontGame extends React.Component<any, any> {
                         </WrapperFrontGame>
 
                     }}
+
 
             </Subscribe>
 
@@ -58,25 +60,25 @@ class FrontGame extends React.Component<any, any> {
 }
 
 const WrapperColor = styled.div`
-display: flex;
-padding : 10px;
-background: #999999;
+    display: flex;
+    padding : 10px;
+    background: #999999;
 `
 const Image = styled.div`
-width: 60px;
-height: 60px;
-border: 3px solid ${props => props.active ? 'black' : 'white'};
-background: url(${props => props.urlImg ? props.urlImg : ''});
-background-size: cover;
-cursor: pointer;
-margin : 3px;
+    width: 60px;
+    height: 60px;
+    border: 3px solid ${props => props.active ? 'black' : 'white'};
+    background: url(${props => props.urlImg ? props.urlImg : ''});
+    background-size: cover;
+    cursor: pointer;
+    margin : 3px;
 `
 const ButtonCir = styled.div`
-width: 30px;
-height: 30px;
-border-radius: 50%;
-border: 3px solid ${props => props.active ? 'black' : 'white'};
-background: ${props => props.color ? props.color : ''};
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 3px solid ${props => props.active ? 'black' : 'white'};
+    background: ${props => props.color ? props.color : ''};
 cursor: pointer;
 `
 const WrapperFrontGame = styled.div`
