@@ -7,6 +7,8 @@ import {ICONS} from "../../UI/Icon";
 import UILayout from "../../UI/Layout";
 import styled from 'styled-components'
 
+// import set = Reflect.set;
+
 function useInterval(callback, delay) {
     const savedCallback = useRef();
 
@@ -31,42 +33,58 @@ function useInterval(callback, delay) {
 }
 
 const ModelPreview = ({isOpen, setOpen, selectContainer}) => {
-    const [nowTime, setTime] = React.useState(selectContainer.state.time)
+    const [nowTime, setTime] = React.useState(0)
+    const [speedCount, setSpeedCount] = React.useState(1000)
+
     useInterval(() => {
         // Your custom logic here
-        setTime(nowTime - 1);
-    }, 1000);
+        if (isOpen) {
+            if (nowTime - 1 === 0) {
+                setSpeedCount(null)
+            }
+            setTime(nowTime - 1);
+        }
 
-    console.log("selectContainer", selectContainer)
+    }, speedCount);
+    React.useEffect(() => {
+        setTime(selectContainer.state.time)
+        return () => {
+            setTime(selectContainer.state.time)
+            setSpeedCount(1000)
+        }
+    }, [isOpen])
     return <Subscribe to={[selectContainer]}>
         {() => {
             const {answers, title, imageLinkDesc} = selectContainer.state
             return <UIModal
                 open={isOpen}
-                title="Modal 1"
+                title="Preview"
                 onClose={() => setOpen(false)}
                 size="large"
 
                 onDismiss={() => setOpen(false)}>
-                <UILayout.Pane>
+                <WrapperContent>
                     {/*<WrapperContent style={{width : '100%', background : 'white' }}>*/}
-                    <ContentDiv><h1>{title}</h1></ContentDiv>
-                </UILayout.Pane>
-                <div style={{display: 'flex', margin: '10px'}}>
-
-                    <TimeBox>
+                    <ContentDiv style={{color: 'black'}}><h1>{title}</h1></ContentDiv>
+                </WrapperContent>
+                <div style={{
+                    display: 'flex', margin: '10px', alignItems: 'center',
+                    justifyContent: 'space-between'
+                }}>
+                    {nowTime && <TimeBox>
                         {nowTime}
-                    </TimeBox>
-                    <UILayout.Pane style={{width: 400}}>
+                    </TimeBox>}
+                    <UILayout.Pane style={{width: 400, height: 200, flex: 1}}>
                         {imageLinkDesc && imageLinkDesc.length &&
                         <ImageBackground backgroundSrc={imageLinkDesc}/>}
                     </UILayout.Pane>
                 </div>
                 <WrapperAnswer>{answers.map((answer, key) => {
                     return <WrapperContent backgroundColor={IN_ORDER_COLOR[key]}>
+
                         <svg fill="white" width={32} height={32}
                              viewBox="0 0 32 32"> {ICONS[IN_ORDER_ICON[key]]}</svg>
-                        <ContentDiv>{answer.value}</ContentDiv>
+                        <ContentDiv active={answer.wrong && !speedCount}>{answer.value}</ContentDiv>
                     </WrapperContent>
 
                 })}
@@ -96,5 +114,11 @@ const TimeBox = styled.div`
 `
 const ContentDiv = styled.div`
 padding: 50px;
+
+//position: absolute;
+${props => props.active ? `
+    width: 100%;
+    background: #25252538;`
+    : ''}
 `
 export default ModelPreview

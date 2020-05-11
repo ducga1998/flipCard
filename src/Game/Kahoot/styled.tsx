@@ -18,6 +18,9 @@ export const WrapperKahoot = styled.div`
       height : 1000px;`
 export const ItemLevel = styled.div`
    display: flex;
+   
+    flex-direction: column;
+
    justify-content: center;
    align-content: center;
    img {
@@ -70,4 +73,32 @@ export const WrapperCheckBox = styled.div`
     top: -1px;
     left: 3px;
   }
+`
+export const PlaceHolder = styled.div`
+position: relative;
+    width: calc(50% - 0.125rem);
+    height: 7px;
+    margin-bottom: 3px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: ${props => props.borderColor ? props.borderColor : ''};
+    border-image: initial;
+    border-radius: 0.125rem;
+&:before{
+content: "";
+    position: absolute;
+    right: 3px;
+  ${props => props.active ? `  height: 5px;
+    width: 5px;` : ''}
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 1;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: white;
+    border-image: initial;
+    background: rgb(102, 191, 57);
+}
+
 `

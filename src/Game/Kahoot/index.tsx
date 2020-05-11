@@ -20,6 +20,7 @@ import {IN_ORDER_COLOR, IN_ORDER_ICON} from "../../util";
 import {
     ImageBackground,
     ItemLevel,
+    PlaceHolder,
     WrapperAnswer,
     WrapperCheckBox,
     WrapperContent,
@@ -85,115 +86,123 @@ const Index = () => {
                                 options={{delay: 100}}
                                 render={(items) => items.map(container => {
                                     console.log("levelSelect.state.id", levelSelect)
-                                    const {imageLinkDesc, id} = container.state
-                                    return <UIList.Item active={levelSelect ? levelSelect.state.id === id : false}
-                                                        className="drag" key={id} interactive bordered>
-                                        <ItemLevel onClick={() => {
-                                            levelContainer.selectLevel(container)
-                                        }}>
-                                            <img
-                                                src={imageLinkDesc && imageLinkDesc.length > 0 ? imageLinkDesc : 'defaultImageLevel.jpg'}/>
-                                        </ItemLevel>
-                                    </UIList.Item>
+
+                                    return <Subscribe to={[container]}>
+                                        {
+                                            () => {
+                                                const {imageLinkDesc, id, answers} = container.state
+                                                return <UIList.Item
+                                                    active={levelSelect ? levelSelect.state.id === id : false}
+                                                    className="drag" key={id} interactive bordered>
+                                                    <ItemLevel onClick={() => {
+                                                        levelContainer.selectLevel(container)
+                                                    }}>
+
+                                                        <ImageBackground style={{height: 100}}
+                                                                         backgroundSrc={imageLinkDesc && imageLinkDesc.length > 0 ? imageLinkDesc : 'defaultImageLevel.jpg'}/>
+                                                        <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 5}}>
+                                                            {answers.map((answer, key) => {
+                                                                return <PlaceHolder active={answer.wrong}
+                                                                                    borderColor={IN_ORDER_COLOR[key]}/>
+                                                            })}
+                                                        </div>
+                                                    </ItemLevel>
+                                                </UIList.Item>;
+                                            }
+                                        }
+                                    </Subscribe>
                                 })}
                             />
-
                         </UIPane>
                         <UIButton onClick={handleAddLevel}>Add Item</UIButton>
                     </WrapperLevel>
                     <WrapperCreateQuestion>
-                        <UILayout.Pane>
-                            <UILayout.Content style={{textAlign: 'end'}}>
-                                <ModelPreview isOpen={isPreview} setOpen={setPreview} selectContainer={levelSelect}/>
-                                <UIButton onClick={() => setPreview(true)}>Preview</UIButton>
-                                <UIButton>Done</UIButton>
-                            </UILayout.Content>
-                            {levelSelect && <Subscribe to={[levelSelect]}>
-                                {
-                                    () => {
-                                        const {title, answers, imageLinkDesc, time, point} = levelSelect.state
-                                        console.log("answers", answers)
-                                        return <>
-                                            <UILayout.Pane>
-                                                {/*<WrapperContent style={{width : '100%', background : 'white' }}>*/}
-                                                <ContentEditable
-                                                    style={{flex: 1}}
-                                                    onKeyPress={e => {
-                                                    }}
-                                                    onChange={(event, value) => levelSelect.setState({title, value})}
-                                                    html={title}
-                                                    color="black"
-                                                />
-                                                {/*</WrapperContent>*/}
+                        <UILayout.Content style={{textAlign: 'end', background: 'transparent'}}>
+                            <ModelPreview isOpen={isPreview} setOpen={setPreview} selectContainer={levelSelect}/>
+                            <UIButton onClick={() => setPreview(true)}>Preview</UIButton>
+                            <UIButton>Done</UIButton>
+                        </UILayout.Content>
+                        {levelSelect && <Subscribe to={[levelSelect]}>
+                            {
+                                () => {
+                                    const {title, answers, imageLinkDesc, time, point} = levelSelect.state
+                                    console.log("answers", answers)
+                                    return <>
+                                        <WrapperContent style={{width: '100%', background: 'white'}}>
+                                            <ContentEditable
+                                                style={{flex: 1}}
+                                                onKeyPress={e => {
+                                                }}
+                                                onChange={(event, value) => levelSelect.setState({title, value})}
+                                                html={title}
+                                                color="black"
+                                            />
+                                        </WrapperContent>
+                                        <div style={{display: 'flex', margin: '10px'}}>
+                                            <UILayout.Pane style={{width: 400}}>
+                                                <UIGrid>
+                                                    <UILabel>Time:</UILabel>
+                                                    <UISelect value={time}
+                                                              options={[5, 10, 20, 30, 60, 90, 120, 240].map(item => ({
+                                                                  value: item,
+                                                                  label: item
+                                                              }))}
+                                                              onChange={value => levelSelect.setState({time: value})}/>
+                                                </UIGrid>
+                                                <UIGrid>
+                                                    <UILabel>Point:</UILabel>
+                                                    <UISelect value={point}
+                                                              options={[{value: 500, label: 500}, {
+                                                                  value: 1000,
+                                                                  label: 1000
+                                                              }, {
+                                                                  value: 2000,
+                                                                  label: 2000
+                                                              }]}
+                                                              onChange={value => levelSelect.setState({point: value})}/>
+                                                </UIGrid>
+                                                <UIGrid>
+                                                    Image :
+                                                    <UIInput value={imageLinkDesc}
+                                                             onChange={value => levelSelect.setState({imageLinkDesc: value})}
+                                                    />
+                                                </UIGrid>
                                             </UILayout.Pane>
+                                            <UILayout.Pane style={{width: 400}}>
+                                                {imageLinkDesc && imageLinkDesc.length &&
+                                                <ImageBackground backgroundSrc={imageLinkDesc}/>}
+                                            </UILayout.Pane>
+                                        </div>
+                                        <WrapperAnswer>
+                                            {answers.map((answer, key) => {
+                                                return <WrapperContent backgroundColor={IN_ORDER_COLOR[key]}>
+                                                    <svg fill="white" width={32} height={32}
+                                                         viewBox="0 0 32 32"> {ICONS[IN_ORDER_ICON[key]]}</svg>
+                                                    <ContentEditable
+                                                        style={{flex: 10}}
+                                                        onKeyPress={e => {
+                                                        }}
 
+                                                        onChange={(event, value) => levelSelect
+                                                            .setDataQuestion('value', value, answer.id)}
+                                                        html={answer.value}
 
-                                            <div style={{display: 'flex', margin: '10px'}}>
-                                                <UILayout.Pane style={{width: 400}}>
-                                                    <UIGrid>
-                                                        <UILabel>Time:</UILabel>
-                                                        <UISelect value={time}
-                                                                  options={[5, 10, 20, 30, 60, 90, 120, 240].map(item => ({
-                                                                      value: item,
-                                                                      label: item
-                                                                  }))}
-                                                                  onChange={value => levelSelect.setState({time: value})}/>
-                                                    </UIGrid>
-                                                    <UIGrid>
-                                                        <UILabel>Point:</UILabel>
-                                                        <UISelect value={point}
-                                                                  options={[{value: 500, label: 500}, {
-                                                                      value: 1000,
-                                                                      label: 1000
-                                                                  }, {
-                                                                      value: 2000,
-                                                                      label: 2000
-                                                                  }]}
-                                                                  onChange={value => levelSelect.setState({point: value})}/>
-                                                    </UIGrid>
-                                                    <UIGrid>
-                                                        Image :
-                                                        <UIInput value={imageLinkDesc}
-                                                                 onChange={value => levelSelect.setState({imageLinkDesc: value})}
-                                                        />
-                                                    </UIGrid>
-                                                </UILayout.Pane>
-                                                <UILayout.Pane style={{width: 400}}>
-                                                    {imageLinkDesc && imageLinkDesc.length &&
-                                                    <ImageBackground backgroundSrc={imageLinkDesc}/>}
-                                                </UILayout.Pane>
-                                            </div>
-                                            <WrapperAnswer>
-                                                {answers.map((answer, key) => {
-                                                    return <WrapperContent backgroundColor={IN_ORDER_COLOR[key]}>
-                                                        <svg fill="white" width={32} height={32}
-                                                             viewBox="0 0 32 32"> {ICONS[IN_ORDER_ICON[key]]}</svg>
-                                                        <ContentEditable
-                                                            style={{flex: 10}}
-                                                            onKeyPress={e => {
-                                                            }}
+                                                    />
+                                                    <WrapperCheckBox>
+                                                        <UICheckBox
+                                                            value={answer.wrong} onChange={() => {
+                                                            levelSelect.setDataQuestion('wrong', !answer.wrong, answer.id)
+                                                        }}/>
+                                                    </WrapperCheckBox>
+                                                </WrapperContent>
 
-                                                            onChange={(event, value) => levelSelect
-                                                                .setDataQuestion('value', value, answer.id)}
-                                                            html={answer.value}
-
-                                                        />
-                                                        <WrapperCheckBox>
-                                                            <UICheckBox
-                                                                value={answer.wrong} onChange={() => {
-                                                                levelSelect.setDataQuestion('wrong', !answer.wrong, answer.id)
-                                                            }}/>
-                                                        </WrapperCheckBox>
-                                                    </WrapperContent>
-
-                                                })}
-                                            </WrapperAnswer>
-                                        </>
-                                    }
+                                            })}
+                                        </WrapperAnswer>
+                                    </>
                                 }
-                            </Subscribe>
                             }
-                        </UILayout.Pane>
+                        </Subscribe>
+                        }
 
                     </WrapperCreateQuestion>
                 </WrapperKahoot>
