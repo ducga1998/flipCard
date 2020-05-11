@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 export const WrapperAnswer = styled.div`
      display: flex;
      flex-wrap: wrap;
@@ -47,13 +48,26 @@ export    const WrapperContent = styled.div`
      border-radius: 4px;
      text-decoration: none;
 `
-export const WrapperQuiz = styled.div`
-     display: flex;
+export const ImageBackground = styled.div`
+display: block;
+    background-image: url(${props => props.backgroundSrc ? props.backgroundSrc : ''});
+    background-size: contain;
+    height: 100%;
+    width: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0px auto;
 `
-export const CharQuiz = styled.div`
-     margin : 5px;
-     padding : 10px;
-     background :${props => props.isHideChar ? 'yellow' : 'indianred'};
-     border-radius: 2px;
-     cursor: pointer;
-     border : ${props => props.selected ? '2px solid #007eff ' : '2px solid black'}`
+export const WrapperCheckBox = styled.div`
+  input {
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+  }
+  input:checked:before{
+    font-size: 24px;
+    top: -1px;
+    left: 3px;
+  }
+`
