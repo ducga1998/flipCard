@@ -1,5 +1,8 @@
 import React, {useEffect} from 'react'
-import Sortable from 'sortablejs'
+// import Sortable from 'sortablejs'
+import Sortable, {AutoScroll} from 'sortablejs/modular/sortable.core.esm.js';
+
+Sortable.mount(new AutoScroll());
 
 interface IProps {
     wrapper: React.Component | React.FunctionComponent
@@ -26,11 +29,13 @@ const SortableJs = (props) => {
     }
     useEffect(() => {
         let sortable = Sortable.create(sortRef, {...options, ...defaultOptions})
+        // sortable.scroll(1000)
+        sortRef.scrollTo(0, sortRef.scrollHeight)
         return () => sortable.destroy()
     })
 
     return (
-        <Component ref={r => sortRef = r} {...wrapperProps}>
+        <Component ref={r => sortRef = r} {...{...wrapperProps, ...{scroll: true, bubbleScroll: true}}}>
             {
                 children
             }

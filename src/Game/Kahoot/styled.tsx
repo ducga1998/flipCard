@@ -16,8 +16,8 @@ export const WrapperLevel = styled.div`
  overflow: hidden;
 `
 export const WrapperKahoot = styled.div`
-      display: flex;
-      //height : 1000px;`
+   display: flex;
+ `
 export const ItemLevel = styled.div`
    display: flex;
    padding : 0.125rem;

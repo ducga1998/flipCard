@@ -19,7 +19,9 @@ class ContainerLevel extends Container<{ levels: any[], levelSelect: any }> {
 
     async duplicateLevel(index) {
         const levelDuplicate = this.state.levels[index]
-        const newArray = insertAt(this.state.levels, index, levelDuplicate)
+        // delete levelDuplicate.state.id
+        const newContainer = new KahootContainerQuestion({...levelDuplicate.state, ...{id: undefined}})
+        const newArray = insertAt(this.state.levels, index, newContainer)
         await this.setState({levels: newArray})
     }
 

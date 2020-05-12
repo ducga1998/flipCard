@@ -41,48 +41,10 @@ const Index = () => {
     const [isPreview, setPreview] = React.useState(false)
     const [idAnswerFocus, setId] = React.useState('')
     const handleOpenGame = async () => {
-        // const containerQuestion: any = new KahootContainerQuestion({
-        //     answers: Array(4).fill({value: '', wrong: false})
-        //         .map(item => ({...item, ...{id: uuid()}})),
-        //     time: 20,
-        //     point: 1000,
-        //     title: 'asca',
-        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        // })
-        // const containerQuestion2: any = new KahootContainerQuestion({
-        //     answers: Array(4).fill({value: '', wrong: false})
-        //         .map(item => ({...item, ...{id: uuid()}})),
-        //     time: 20,
-        //     point: 1000,
-        //     title: 'asca',
-        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        // })
-        // const containerQuestion3: any = new KahootContainerQuestion({
-        //     answers: Array(4).fill({value: '', wrong: false})
-        //         .map(item => ({...item, ...{id: uuid()}})),
-        //     time: 20,
-        //     point: 1000,
-        //     title: 'asca',
-        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        // })
-        // const containerQuestion4: any = new KahootContainerQuestion({
-        //     answers: Array(4).fill({value: 'ccas', wrong: false})
-        //         .map(item => ({...item, ...{id: uuid()}})),
-        //     time: 20,
-        //     title: 'asca',
-        //     point: 1000,
-        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        // })
-        // await levelContainer.createLevel(containerQuestion)
-        // await levelContainer.createLevel(containerQuestion2)
-        // await levelContainer.createLevel(containerQuestion3)
-        // await levelContainer.createLevel(containerQuestion4)
-        //
         levelContainer.importData()
-        // await levelContainer.selectLevel(containerQuestion)
         await setOpenGame(true)
     }
-    const handleAddLevel = async () => {
+    const handleAddLevel = async (e: Event) => {
         const containerQuestion: any = new KahootContainerQuestion({
             answers: Array(4).fill({value: '', wrong: false})
                 .map(item => ({...item, ...{id: uuid()}})),
@@ -91,7 +53,11 @@ const Index = () => {
             title: '',
             imageLinkDesc: '',
         })
+        const target = e.target as Element
+        // target.parentElement
         await levelContainer.createLevel(containerQuestion)
+        console.log("target.parentElement", target.parentElement)
+        target.parentElement.scrollTo(0, target.parentElement.scrollHeight)
     }
     const checkPreview = (container) => {
         const {imageLinkDesc, answers,} = container.state
@@ -119,6 +85,7 @@ const Index = () => {
                                 onChange={levels => {
                                     levelContainer.setState({levels})
                                 }}
+
                                 options={{delay: 100}}
                                 render={(items) => items.map((container, key) => {
                                     console.log("levelSelect.state.id", levelSelect)
@@ -132,8 +99,9 @@ const Index = () => {
                                                         <UIButton onClick={() => {
                                                             levelContainer.duplicateLevel(key)
                                                         }} iconBefore="ungroup" compact/>
-                                                        <UIButton onClick={() => {
-                                                            confirm({
+                                                        <UIButton onClick={async () => {
+                                                            await confirm({
+                                                                title: "Form Xác nhận",
                                                                 content: "Xác nhận xoá ?", onConfirm: () => {
                                                                     levelContainer.deleteLevel(id)
                                                                 }
@@ -144,8 +112,8 @@ const Index = () => {
                                                     <UIList.Item
                                                         active={levelSelect ? levelSelect.state.id === id : false}
                                                         className="drag" key={id} interactive bordered>
-                                                        <ItemLevel onClick={() => {
-                                                            levelContainer.selectLevel(container)
+                                                        <ItemLevel onClick={async () => {
+                                                            await levelContainer.selectLevel(container)
                                                         }}>
 
                                                             <ImageBackground style={{height: 100}}

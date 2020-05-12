@@ -38,6 +38,7 @@ const SortableList = (props: SortProps) => {
 
 	return (
 		<SortableJs
+
 			options={defaultOptions}
 			onChange={onChange && handleChange}
 			{...rest}

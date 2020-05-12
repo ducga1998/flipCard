@@ -44,12 +44,4 @@ class KahootContainerQuestion extends Container< StateQuestion > {
 }
 
 const DEFAULT_NUMBER_ANSWER = 4
-// export const containerKahootQuestion: any = new KahootContainerQuestion({
-//     answers : Array(DEFAULT_NUMBER_ANSWER).fill({  value : '' , wrong : false})
-//         .map(item => ({...item , ...{id : uuid()}})),
-//     time :  20,
-//     point : 1000 ,
-//     imageLinkDesc : 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-// })
-// window['kahoot'] = containerKahootQuestion
 export default KahootContainerQuestion
