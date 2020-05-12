@@ -105,7 +105,7 @@ const Index = () => {
                 const {levels, levelSelect} = levelContainer.state
                 return <WrapperKahoot>
                     <WrapperLevel style={{width: 300}}>
-                        <UIPane>
+                        <UIPane style={{height: '38rem'}}>
                             <SortableList
                                 items={levels}
                                 wrapper={UIList.Group}
@@ -164,7 +164,7 @@ const Index = () => {
                                 })}
                             />
                         </UIPane>
-                        <UIButton onClick={handleAddLevel}>Add Item</UIButton>
+                        <UIButton style={{}} onClick={handleAddLevel}>Add Item</UIButton>
                     </WrapperLevel>
                     <WrapperCreateQuestion>
                         <UILayout.Content style={{textAlign: 'end', background: 'transparent'}}>
@@ -180,6 +180,7 @@ const Index = () => {
                                     return <>
                                         <WrapperContent style={{width: '100%', background: 'white'}}>
                                             <ContentEditable
+                                                placeholder="Click to start typing your question"
                                                 idAnswerFocus={idAnswerFocus}
                                                 idAnswer={'title'}
                                                 style={{flex: 1, color: "black"}}

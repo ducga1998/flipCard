@@ -190,13 +190,15 @@ export default class ContentEditable extends Component<any, any> {
     }
 
     render() {
-        const {idAnswer, idAnswerFocus, style} = this.props;
+        const {idAnswer, idAnswerFocus, style, placeholder, value} = this.props;
         // const {idAnswerFocus} = this.state
         console.log("{idAnswer, idAnswerFocus }", {idAnswer, idAnswerFocus})
         return (
             <>
                 {(idAnswerFocus === idAnswer) && this.renderToolbar()}
                 <SpanText
+                    data-placeholder={placeholder}
+                    hidePlaceholder={value && value.length > 0}
                     style={style}
                     ref={(elem) => {
                         this.content = elem

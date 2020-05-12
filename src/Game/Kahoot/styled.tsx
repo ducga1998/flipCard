@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const WrapperAnswer = styled.div`
      display: flex;
      flex-wrap: wrap;
-     height: 100%;
+     //height: 100%;
      align-content: flex-start;
      width: 100%;
      flex: 4 1 0%;
@@ -11,16 +11,17 @@ export const WrapperAnswer = styled.div`
      background: rgb(242, 242, 242);
 `
 export const WrapperLevel = styled.div`
- 
+ position:  fixed;
+ width: 100%;
+ overflow: hidden;
 `
 export const WrapperKahoot = styled.div`
       display: flex;
-      height : 1000px;`
+      //height : 1000px;`
 export const ItemLevel = styled.div`
    display: flex;
-    padding : 0.125rem;
-    flex-direction: column;
-
+   padding : 0.125rem;
+   flex-direction: column;
    justify-content: center;
    align-content: center;
    img {
@@ -31,7 +32,9 @@ export const ItemLevel = styled.div`
 export const WrapperCreateQuestion = styled.div`
      flex : 10;
      background: #f2f2f2;
-     padding : 10px;
+     //padding : 10px;
+     margin:0 0 0 19rem;
+     padding :0px 10px;
 `
 export const WrapperContent = styled.div`
      display: flex;
@@ -90,7 +93,7 @@ export const PlaceHolder = styled.div`
      position: absolute;
      right: 3px;
     ${props => props.active ? `  height: 5px;
-    width: 5px;` : ''}
+    width: 5px;` : ''};
     top: 50%;
     transform: translateY(-50%);
     opacity: 1;
@@ -117,5 +120,16 @@ export const SpanText = styled.span`
     margin: 0px;
     padding : 50px;
     color: ${props => props.color ? props.color : 'white'};
-   
+   &:before{
+       content: attr(data-placeholder);
+        position: absolute;
+        width: 100%;
+        left: 0px;
+        color: rgb(110, 110, 110);
+        pointer-events: none;
+        font-weight: 400;
+        text-shadow: none;
+        opacity: ${props => props.hidePlaceholder ? 0 : 1};
+        outline: none;
+   }
 `

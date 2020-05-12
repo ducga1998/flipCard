@@ -63,8 +63,8 @@ const ModelPreview = ({isOpen, setOpen, selectContainer}) => {
                 size="large"
 
                 onDismiss={() => setOpen(false)}>
-                <WrapperContent>
-                    <ContentDiv style={{color: 'black'}}><h1>{title}</h1></ContentDiv>
+                <WrapperContent style={{width: '100%'}}>
+                    <SpanText style={{color: 'black'}}>{title}</SpanText>
                 </WrapperContent>
                 <div style={{
                     display: 'flex', margin: '10px', alignItems: 'center',
@@ -95,11 +95,11 @@ const ModelPreview = ({isOpen, setOpen, selectContainer}) => {
 
 }
 const TimeBox = styled.div`
-  display: flex;
+    display: flex;
     flex-direction: row;
-    -webkit-box-align: center;
+   
     align-items: center;
-    -webkit-box-pack: center;
+    margin : 10px;
     justify-content: center;
     width: 3.75rem;
     height: 3.75rem;

@@ -1,20 +1,19 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 import UIList from 'UI/List'
 import UIButton from 'UI/Button'
 import UIText from 'UI/Text'
 import UILayout from 'UI/Layout'
 import styled from 'styled-components'
 
-import { staticItemList as listData } from './listdata'
+import {staticItemList as listData} from './listdata'
 import SortableList from "UI/List/SortableList";
-
 
 
 export const UIPane = styled(UILayout.Pane)`
     width: 100%;
     border-radius: 2px;
     margin-bottom: 8px;
-    //height: 156px;
+    height: 100%;
     ul {
         height: 100%;
         width: 93%;
