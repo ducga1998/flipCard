@@ -24,7 +24,12 @@ class KahootContainerQuestion extends Container< StateQuestion > {
     constructor(props) {
         super(props);
         console.log('props ', props)
-        this.state = {...props , ...{id : uuid()}}
+        if (props.id) {
+            this.state = props
+        } else {
+            this.state = {...props, ...{id: uuid()}}
+        }
+
     }
     setDataQuestion = (key , value , idAnswer) => {
         const {answers}  = this.state

@@ -70,6 +70,7 @@ export const WrapperCheckBox = styled.div`
     height: 30px;
     width: 30px;
     margin-right: 10px;
+    appearance : none;
   }
   input:checked:before{
     font-size: 24px;
@@ -110,7 +111,7 @@ export const SpanText = styled.span`
     flex : 1;
     cursor: pointer;
     vertical-align: bottom;
-    background: ${props => props.backgroundColor ? props.backgroundColor : ''};
+    background: ${props => props.active ? '#0e0e0e3b' : ''};
     font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
     font-weight: bold;
@@ -119,6 +120,7 @@ export const SpanText = styled.span`
     line-height: 0.875rem;
     margin: 0px;
     padding : 50px;
+    //background: #0e0e0e3b;
     color: ${props => props.color ? props.color : 'white'};
    &:before{
        content: attr(data-placeholder);

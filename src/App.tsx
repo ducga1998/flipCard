@@ -9,8 +9,10 @@ import {gameContainer} from "Store/Container";
 import styled, {ThemeProvider} from 'styled-components'
 import theme from "UI/them";
 import Quiz from './Game/Quiz/Quiz'
+import "react-toastify/dist/ReactToastify.css"
 import Kahoot from './Game/Kahoot'
 import {ConfirmWrapper} from 'UI/Confirm';
+import ToastNotification from 'Module/Toast';
 
 function App() {
     React.useEffect(() => {
@@ -20,6 +22,7 @@ function App() {
         <ThemeProvider theme={theme}>
             <Provider>
                 <ConfirmWrapper/>
+                <ToastNotification/>
                 <Router>
                     <div>
                         <h2>Accounts</h2>

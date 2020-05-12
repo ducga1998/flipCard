@@ -41,44 +41,45 @@ const Index = () => {
     const [isPreview, setPreview] = React.useState(false)
     const [idAnswerFocus, setId] = React.useState('')
     const handleOpenGame = async () => {
-        const containerQuestion: any = new KahootContainerQuestion({
-            answers: Array(4).fill({value: '', wrong: false})
-                .map(item => ({...item, ...{id: uuid()}})),
-            time: 20,
-            point: 1000,
-            title: 'asca',
-            imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        })
-        const containerQuestion2: any = new KahootContainerQuestion({
-            answers: Array(4).fill({value: '', wrong: false})
-                .map(item => ({...item, ...{id: uuid()}})),
-            time: 20,
-            point: 1000,
-            title: 'asca',
-            imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        })
-        const containerQuestion3: any = new KahootContainerQuestion({
-            answers: Array(4).fill({value: '', wrong: false})
-                .map(item => ({...item, ...{id: uuid()}})),
-            time: 20,
-            point: 1000,
-            title: 'asca',
-            imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        })
-        const containerQuestion4: any = new KahootContainerQuestion({
-            answers: Array(4).fill({value: 'ccas', wrong: false})
-                .map(item => ({...item, ...{id: uuid()}})),
-            time: 20,
-            title: 'asca',
-            point: 1000,
-            imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
-        })
-        await levelContainer.createLevel(containerQuestion)
-        await levelContainer.createLevel(containerQuestion2)
-        await levelContainer.createLevel(containerQuestion3)
-        await levelContainer.createLevel(containerQuestion4)
-
-        await levelContainer.selectLevel(containerQuestion)
+        // const containerQuestion: any = new KahootContainerQuestion({
+        //     answers: Array(4).fill({value: '', wrong: false})
+        //         .map(item => ({...item, ...{id: uuid()}})),
+        //     time: 20,
+        //     point: 1000,
+        //     title: 'asca',
+        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
+        // })
+        // const containerQuestion2: any = new KahootContainerQuestion({
+        //     answers: Array(4).fill({value: '', wrong: false})
+        //         .map(item => ({...item, ...{id: uuid()}})),
+        //     time: 20,
+        //     point: 1000,
+        //     title: 'asca',
+        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
+        // })
+        // const containerQuestion3: any = new KahootContainerQuestion({
+        //     answers: Array(4).fill({value: '', wrong: false})
+        //         .map(item => ({...item, ...{id: uuid()}})),
+        //     time: 20,
+        //     point: 1000,
+        //     title: 'asca',
+        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
+        // })
+        // const containerQuestion4: any = new KahootContainerQuestion({
+        //     answers: Array(4).fill({value: 'ccas', wrong: false})
+        //         .map(item => ({...item, ...{id: uuid()}})),
+        //     time: 20,
+        //     title: 'asca',
+        //     point: 1000,
+        //     imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
+        // })
+        // await levelContainer.createLevel(containerQuestion)
+        // await levelContainer.createLevel(containerQuestion2)
+        // await levelContainer.createLevel(containerQuestion3)
+        // await levelContainer.createLevel(containerQuestion4)
+        //
+        levelContainer.importData()
+        // await levelContainer.selectLevel(containerQuestion)
         await setOpenGame(true)
     }
     const handleAddLevel = async () => {
@@ -91,6 +92,10 @@ const Index = () => {
             imageLinkDesc: '',
         })
         await levelContainer.createLevel(containerQuestion)
+    }
+    const checkPreview = (container) => {
+        const {imageLinkDesc, answers,} = container.state
+        return imageLinkDesc.length > 0 && answers.filter(answer => answer.wrong && answer.value.length > 0).length > 0
     }
     if (!openGame) {
         return <UILayout.Pane>
@@ -167,17 +172,22 @@ const Index = () => {
                         <UIButton style={{}} onClick={handleAddLevel}>Add Item</UIButton>
                     </WrapperLevel>
                     <WrapperCreateQuestion>
-                        <UILayout.Content style={{textAlign: 'end', background: 'transparent'}}>
-                            <ModelPreview isOpen={isPreview} setOpen={setPreview} selectContainer={levelSelect}/>
-                            <UIButton onClick={() => setPreview(true)}>Preview</UIButton>
-                            <UIButton>Done</UIButton>
-                        </UILayout.Content>
+
                         {levelSelect && <Subscribe to={[levelSelect]}>
                             {
                                 () => {
                                     const {title, answers, imageLinkDesc, time, point} = levelSelect.state
                                     console.log("answers", answers)
                                     return <>
+                                        <UILayout.Content style={{textAlign: 'end', background: 'transparent'}}>
+                                            <ModelPreview isOpen={isPreview} setOpen={setPreview}
+                                                          selectContainer={levelSelect}/>
+                                            {checkPreview(levelSelect) &&
+                                            <UIButton onClick={() => setPreview(true)}>Preview</UIButton>}
+                                            <UIButton onClick={() => {
+                                                levelContainer.saveData()
+                                            }}>Save</UIButton>
+                                        </UILayout.Content>
                                         <WrapperContent style={{width: '100%', background: 'white'}}>
                                             <ContentEditable
                                                 placeholder="Click to start typing your question"

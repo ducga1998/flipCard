@@ -70,11 +70,12 @@ const ModelPreview = ({isOpen, setOpen, selectContainer}) => {
                     display: 'flex', margin: '10px', alignItems: 'center',
                     justifyContent: 'space-between'
                 }}>
-                    {nowTime && <TimeBox>
+                    {nowTime ? <TimeBox>
                         {nowTime}
-                    </TimeBox>}
+                    </TimeBox> : null}
                     <UILayout.Pane style={{width: 400, height: 200, flex: 1}}>
-                        {imageLinkDesc && imageLinkDesc.length &&
+
+                    {imageLinkDesc && imageLinkDesc.length &&
                         <ImageBackground backgroundSrc={imageLinkDesc}/>}
                     </UILayout.Pane>
                 </div>

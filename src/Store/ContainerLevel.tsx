@@ -1,7 +1,9 @@
 import {Container} from 'unstated-x'
 import {insertAt} from "../util";
+import {toast} from 'react-toastify'
+import KahootContainerQuestion from "./ContainerKahoot";
 
-class ContainerLevel extends Container<{ levels : any[]  , levelSelect : any } > {
+class ContainerLevel extends Container<{ levels: any[], levelSelect: any }> {
     constructor(props) {
         super(props);
         this.state = props
@@ -24,6 +26,29 @@ class ContainerLevel extends Container<{ levels : any[]  , levelSelect : any } >
     async deleteLevel(id) {
         const newListLevel = this.state.levels.filter(level => level.state.id !== id)
         await this.setState({levels: newListLevel})
+    }
+
+    saveData = () => {
+        const data = this.state.levels.map(level => {
+            return level.state
+        })
+        localStorage.setItem('kahoot-version-duc', JSON.stringify(data))
+        toast.success("Save Data Success")
+    }
+    importData = () => {
+        const dataSavedJSON = localStorage.getItem('kahoot-version-duc')
+        const dataSaved = JSON.parse(dataSavedJSON)
+        if (dataSaved) {
+            const listContainer = dataSaved.map(item => {
+                const container = new KahootContainerQuestion(item)
+                return container
+            })
+            this.setState({levels: listContainer, levelSelect: listContainer[0]}, () => {
+                toast.success("Load Data Success")
+            })
+        }
+
+
     }
 }
 
