@@ -10,6 +10,7 @@ import styled, {ThemeProvider} from 'styled-components'
 import theme from "UI/them";
 import Quiz from './Game/Quiz/Quiz'
 import Kahoot from './Game/Kahoot'
+import {ConfirmWrapper} from 'UI/Confirm';
 
 function App() {
     React.useEffect(() => {
@@ -18,6 +19,7 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Provider>
+                <ConfirmWrapper/>
                 <Router>
                     <div>
                         <h2>Accounts</h2>
@@ -57,14 +59,6 @@ const GameFlipCard = () => {
     return <WrapperApp>
         <FrontGame/>
         <BackGame/>
-        {/* <div style={{width: '600px'}}>
-                        <Subscribe to={[gameContainer]}>
-                            {() => {
-                                return <JSONTreeView data={gameContainer.state}/>
-                            }
-                            }
-                        </Subscribe>
-                    </div> */}
     </WrapperApp>
 }
 const WrapperApp = styled.div`

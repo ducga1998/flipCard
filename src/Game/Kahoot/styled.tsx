@@ -18,7 +18,7 @@ export const WrapperKahoot = styled.div`
       height : 1000px;`
 export const ItemLevel = styled.div`
    display: flex;
-   
+    padding : 0.125rem;
     flex-direction: column;
 
    justify-content: center;
@@ -33,7 +33,7 @@ export const WrapperCreateQuestion = styled.div`
      background: #f2f2f2;
      padding : 10px;
 `
-export    const WrapperContent = styled.div`
+export const WrapperContent = styled.div`
      display: flex;
      position: relative;
      margin: 0 0.25rem 0.25rem 0;
@@ -75,20 +75,21 @@ export const WrapperCheckBox = styled.div`
   }
 `
 export const PlaceHolder = styled.div`
-position: relative;
-    width: calc(50% - 0.125rem);
-    height: 7px;
-    margin-bottom: 3px;
+    position: relative;
+    width: calc(50% - 0.5rem);
+    height: 10px;
+    margin : 0.125rem;
+ 
     border-width: 1px;
     border-style: solid;
     border-color: ${props => props.borderColor ? props.borderColor : ''};
     border-image: initial;
     border-radius: 0.125rem;
-&:before{
-content: "";
-    position: absolute;
-    right: 3px;
-  ${props => props.active ? `  height: 5px;
+  &:before{
+  content: "";
+     position: absolute;
+     right: 3px;
+    ${props => props.active ? `  height: 5px;
     width: 5px;` : ''}
     top: 50%;
     transform: translateY(-50%);
@@ -101,4 +102,20 @@ content: "";
     background: rgb(102, 191, 57);
 }
 
+`
+export const SpanText = styled.span`
+    flex : 1;
+    cursor: pointer;
+    vertical-align: bottom;
+    background: ${props => props.backgroundColor ? props.backgroundColor : ''};
+    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    position: relative;
+    line-height: 0.875rem;
+    margin: 0px;
+    padding : 50px;
+    color: ${props => props.color ? props.color : 'white'};
+   
 `

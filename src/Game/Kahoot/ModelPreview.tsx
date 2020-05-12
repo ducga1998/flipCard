@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import UIModal from "../../UI/Modal";
 import {Subscribe} from "unstated-x";
-import {ImageBackground, WrapperAnswer, WrapperContent} from "./styled";
+import {ImageBackground, SpanText, WrapperAnswer, WrapperContent} from "./styled";
 import {IN_ORDER_COLOR, IN_ORDER_ICON} from "../../util";
 import {ICONS} from "../../UI/Icon";
 import UILayout from "../../UI/Layout";
@@ -64,7 +64,6 @@ const ModelPreview = ({isOpen, setOpen, selectContainer}) => {
 
                 onDismiss={() => setOpen(false)}>
                 <WrapperContent>
-                    {/*<WrapperContent style={{width : '100%', background : 'white' }}>*/}
                     <ContentDiv style={{color: 'black'}}><h1>{title}</h1></ContentDiv>
                 </WrapperContent>
                 <div style={{
@@ -84,7 +83,8 @@ const ModelPreview = ({isOpen, setOpen, selectContainer}) => {
 
                         <svg fill="white" width={32} height={32}
                              viewBox="0 0 32 32"> {ICONS[IN_ORDER_ICON[key]]}</svg>
-                        <ContentDiv active={answer.wrong && !speedCount}>{answer.value}</ContentDiv>
+                        <SpanText active={answer.wrong && !speedCount}
+                                  dangerouslySetInnerHTML={{__html: answer.value}}/>
                     </WrapperContent>
 
                 })}

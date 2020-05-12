@@ -49,5 +49,11 @@ export function shuffleElementInArray(array) {
 
     return array;
 }
+
+export function insertAt(array, index, elemment) {
+    const cloneArray = [...array]
+    cloneArray.splice(index, 0, elemment);
+    return cloneArray
+}
 export const IN_ORDER_COLOR = ['rgb(226, 27, 60)', 'rgb(19, 104, 206)', 'rgb(216, 158, 0)', 'rgb(38, 137, 12)']
 export const IN_ORDER_ICON = ['triangle', 'diamond', 'circle', 'square']

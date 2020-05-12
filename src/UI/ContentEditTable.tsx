@@ -1,15 +1,71 @@
 import React, {Component} from 'react';
 import styled from 'styled-components'
+import UIButton from "./Button";
 // import UILayout from 'UI/Layout'
-export default class ContentEditable extends Component<any, any> {
-    elem: any
-    _onChange = (ev) => {
-        const method = this.getInnerMethod();
-        const value = this.elem[method];
+import UIGroup from 'UI/Group'
+import {SpanText} from "../Game/Kahoot/styled";
 
-        this.props.onChange(ev, value);
+function generateRichTextEditorCss(target) {
+    const cssObj = {
+        backgroundColor: '',
+        bold: false,
+        italic: false,
+        underline: false,
+        color: '',
+        verticalAlign: ''
     }
 
+    if (target) {
+
+        let css: any = {}
+        let node = target
+        let parentNode = node
+        const sel = window.getSelection()
+        const range = sel.rangeCount && sel.getRangeAt(0)
+        const focusNode = sel.focusNode
+        if (range && !(range && range.startContainer === range.endContainer && range.startOffset === range.endOffset)) {
+            if (focusNode) {
+                node = focusNode.parentElement
+                parentNode = node
+                while (
+                    parentNode.nodeName !== 'SPAN' &&
+                    ((parentNode.parentElement && parentNode.parentElement.nodeName !== 'SPAN') ||
+                        parentNode.nodeName === 'A')
+                    ) {
+                    parentNode = parentNode.parentElement
+                }
+                css = parentNode.style
+                cssObj.backgroundColor = css.backgroundColor === '' ? 'rgb(240, 242, 243)' : css.backgroundColor
+                cssObj.color = css.color === '' ? 'rgb(240, 242, 243)' : css.color
+                cssObj.bold = css.fontWeight === 'bold'
+                cssObj.underline = css.textDecorationLine === 'underline'
+                cssObj.italic = css.fontStyle === 'italic'
+            }
+        }
+        cssObj.verticalAlign = css.verticalAlign
+    }
+    // console.log('cssObj', cssObj)
+    return cssObj
+}
+
+
+export default class ContentEditable extends Component<any, any> {
+    content: any
+    lastHtml: string = ''
+    state = {
+        idAnswerFocus: ''
+    }
+    formatDoc = (sCmd, sValue = null) => {
+        document.execCommand('styleWithCSS', true)
+        if (sValue) {
+            document.execCommand(sCmd, false, sValue)
+        } else {
+            document.execCommand(sCmd, false)
+        }
+        console.log("this.elem", this.content)
+        this.content && this.content.focus()
+
+    }
     _onPaste = (ev) => {
         const {onPaste, contentEditable} = this.props;
 
@@ -24,70 +80,145 @@ export default class ContentEditable extends Component<any, any> {
         }
     }
 
-    _onKeyPress = (ev) => {
-        const method = this.getInnerMethod();
-        const value = this.elem[method];
-        this.props.onKeyPress(ev, value);
+
+    componentDidMount() {
+        this.content.innerHTML = this.props.value
     }
 
-    getInnerMethod() {
-        return this.props.contentEditable === 'plaintext-only' ? 'innerText' : 'innerHTML';
-    }
-
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>, snapshot?: any): void {
-        console.log("change hmtl",this.props.html)
-        if(prevProps.html != this.props.html) {
-            console.log("change hmtl",this.props.html)
+    // check when data change then value in text the same change
+    componentDidUpdate(prevProps: {
+        value: string
+    }) {
+        if (this.props.value !== prevProps.value && !this.content.matches(':focus')) {
+            this.content.innerHTML = this.props.value
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        const method = this.getInnerMethod();
-        return nextProps.html !== this.elem[method];
+    handleOnBlur = (e) => {
+        const target: HTMLElement = e.currentTarget
+        const html = target.innerHTML
+        if (html !== this.lastHtml) {
+            this.props.onChange(e, html)
+        }
+        this.lastHtml = html
+    }
+    emitChange = (e: any) => {
+        const target: HTMLElement = e.currentTarget
+        const html = target.innerHTML
+        if (html !== this.lastHtml) {
+            this.props.onChange(e, html)
+        }
+        this.lastHtml = html
     }
 
     renderToolbar = () => {
+        const cssObj: any = generateRichTextEditorCss(this.content)
+        return <Toolbar>
 
+            <UIGroup.Button>
+                <UIButton
+                    compact
+                    iconBefore="superscript"
+                    style={{border: '1px solid #172B4D'}}
+                    onClick={e => {
+                        this.formatDoc('superscript')
+                    }}
+                    active={cssObj.verticalAlign === 'super'}
+                    variant="dark"
+                />
+
+
+                <UIButton
+                    compact
+                    iconBefore="subscript"
+                    style={{border: '1px solid #172B4D'}}
+                    active={cssObj.verticalAlign === 'sub'}
+                    onClick={e => {
+                        this.formatDoc('subscript')
+                    }}
+                    variant="dark"
+                />
+
+
+                <UIButton
+                    compact
+                    variant="dark"
+                    iconBefore="formatBold"
+                    style={{border: '1px solid #172B4D'}}
+                    active={cssObj.bold}
+                    // this.formatDoc('bold')
+                    onClick={e => {
+                        this.formatDoc('bold', null)
+                    }}
+                />
+
+
+                <UIButton
+                    compact
+                    variant="dark"
+                    iconBefore="formatItalic"
+                    style={{border: '1px solid #172B4D'}}
+                    active={cssObj.italic}
+                    onClick={e => {
+                        this.formatDoc('italic')
+                    }}
+                />
+
+
+                <UIButton
+                    compact
+                    variant="dark"
+                    style={{border: '1px solid #172B4D'}}
+                    iconBefore="formatUnderline"
+                    active={cssObj.underline}
+                    onClick={e => {
+                        this.formatDoc('underline')
+                    }}
+                />
+
+
+                <UIButton
+                    compact
+                    iconBefore="eraser"
+                    variant="dark"
+                    onClick={e => {
+                        this.formatDoc('removeFormat')
+                    }}
+                />
+            </UIGroup.Button>
+        </Toolbar>
     }
 
     render() {
-        const {tagName, html, contentEditable, ...props} = this.props;
-
-        const Element = tagName || Div;
-
+        const {idAnswer, idAnswerFocus, style} = this.props;
+        // const {idAnswerFocus} = this.state
+        console.log("{idAnswer, idAnswerFocus }", {idAnswer, idAnswerFocus})
         return (
+            <>
+                {(idAnswerFocus === idAnswer) && this.renderToolbar()}
+                <SpanText
+                    style={style}
+                    ref={(elem) => {
+                        this.content = elem
+                    }}
+                    onInput={this.emitChange}
+                    contentEditable={true}
+                    onPaste={this._onPaste}
+                    onBlur={this.handleOnBlur}
+                    onFocus={this.props.onFocus}
+                />
 
-             // <UILayout>
-                 <Element
-                     {...props}
-                     ref={(elem) => {
-                         this.elem = elem
-                     }}
-                     dangerouslySetInnerHTML={{__html: html}}
-                     contentEditable={contentEditable === 'false' ? false : true}
-                     onInput={this._onChange}
-                     onPaste={this._onPaste}
-                     onKeyPress={this._onKeyPress}
-                 />
-             // </UILayout>
+            </>
 
-        )
+        );
     }
 }
-const Div = styled.div`
-   
-    cursor: pointer;
- 
-    vertical-align: bottom;
- background: ${props => props.backgroundColor ? props.backgroundColor : ''};
-    font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
-    position: relative;
-    line-height: 0.875rem;
-    margin: 0px;
-    padding : 50px;
-     color: ${props => props.color ? props.color : 'white'};
-   
+const Toolbar = styled.div`
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translate(-50%, -100%);
 `
+const WrapperContentRichText = styled.div``
+
+

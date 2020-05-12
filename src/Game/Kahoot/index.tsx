@@ -28,6 +28,7 @@ import {
     WrapperKahoot,
     WrapperLevel
 } from './styled';
+import confirm from "../../UI/Confirm";
 
 
 const levelContainer = new ContainerLevel({
@@ -38,15 +39,45 @@ window['levelContainer'] = levelContainer
 const Index = () => {
     const [openGame, setOpenGame] = React.useState(false)
     const [isPreview, setPreview] = React.useState(false)
+    const [idAnswerFocus, setId] = React.useState('')
     const handleOpenGame = async () => {
         const containerQuestion: any = new KahootContainerQuestion({
             answers: Array(4).fill({value: '', wrong: false})
                 .map(item => ({...item, ...{id: uuid()}})),
             time: 20,
             point: 1000,
+            title: 'asca',
+            imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
+        })
+        const containerQuestion2: any = new KahootContainerQuestion({
+            answers: Array(4).fill({value: '', wrong: false})
+                .map(item => ({...item, ...{id: uuid()}})),
+            time: 20,
+            point: 1000,
+            title: 'asca',
+            imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
+        })
+        const containerQuestion3: any = new KahootContainerQuestion({
+            answers: Array(4).fill({value: '', wrong: false})
+                .map(item => ({...item, ...{id: uuid()}})),
+            time: 20,
+            point: 1000,
+            title: 'asca',
+            imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
+        })
+        const containerQuestion4: any = new KahootContainerQuestion({
+            answers: Array(4).fill({value: 'ccas', wrong: false})
+                .map(item => ({...item, ...{id: uuid()}})),
+            time: 20,
+            title: 'asca',
+            point: 1000,
             imageLinkDesc: 'https://miro.medium.com/proxy/1*HSisLuifMO6KbLfPOKtLow.jpeg'
         })
         await levelContainer.createLevel(containerQuestion)
+        await levelContainer.createLevel(containerQuestion2)
+        await levelContainer.createLevel(containerQuestion3)
+        await levelContainer.createLevel(containerQuestion4)
+
         await levelContainer.selectLevel(containerQuestion)
         await setOpenGame(true)
     }
@@ -56,6 +87,7 @@ const Index = () => {
                 .map(item => ({...item, ...{id: uuid()}})),
             time: 20,
             point: 1000,
+            title: '',
             imageLinkDesc: '',
         })
         await levelContainer.createLevel(containerQuestion)
@@ -72,7 +104,6 @@ const Index = () => {
             () => {
                 const {levels, levelSelect} = levelContainer.state
                 return <WrapperKahoot>
-
                     <WrapperLevel style={{width: 300}}>
                         <UIPane>
                             <SortableList
@@ -84,30 +115,49 @@ const Index = () => {
                                     levelContainer.setState({levels})
                                 }}
                                 options={{delay: 100}}
-                                render={(items) => items.map(container => {
+                                render={(items) => items.map((container, key) => {
                                     console.log("levelSelect.state.id", levelSelect)
 
                                     return <Subscribe to={[container]}>
                                         {
                                             () => {
                                                 const {imageLinkDesc, id, answers} = container.state
-                                                return <UIList.Item
-                                                    active={levelSelect ? levelSelect.state.id === id : false}
-                                                    className="drag" key={id} interactive bordered>
-                                                    <ItemLevel onClick={() => {
-                                                        levelContainer.selectLevel(container)
-                                                    }}>
+                                                return <div style={{display: 'flex', flexDirection: 'row'}}>
+                                                    <div style={{display: 'flex', flexDirection: 'column'}}>
+                                                        <UIButton onClick={() => {
+                                                            levelContainer.duplicateLevel(key)
+                                                        }} iconBefore="ungroup" compact/>
+                                                        <UIButton onClick={() => {
+                                                            confirm({
+                                                                content: "Xác nhận xoá ?", onConfirm: () => {
+                                                                    levelContainer.deleteLevel(id)
+                                                                }
+                                                            })
 
-                                                        <ImageBackground style={{height: 100}}
-                                                                         backgroundSrc={imageLinkDesc && imageLinkDesc.length > 0 ? imageLinkDesc : 'defaultImageLevel.jpg'}/>
-                                                        <div style={{display: 'flex', flexWrap: 'wrap', marginTop: 5}}>
-                                                            {answers.map((answer, key) => {
-                                                                return <PlaceHolder active={answer.wrong}
-                                                                                    borderColor={IN_ORDER_COLOR[key]}/>
-                                                            })}
-                                                        </div>
-                                                    </ItemLevel>
-                                                </UIList.Item>;
+                                                        }} iconBefore="bin" compact/>
+                                                    </div>
+                                                    <UIList.Item
+                                                        active={levelSelect ? levelSelect.state.id === id : false}
+                                                        className="drag" key={id} interactive bordered>
+                                                        <ItemLevel onClick={() => {
+                                                            levelContainer.selectLevel(container)
+                                                        }}>
+
+                                                            <ImageBackground style={{height: 100}}
+                                                                             backgroundSrc={imageLinkDesc && imageLinkDesc.length > 0 ? imageLinkDesc : 'defaultImageLevel.jpg'}/>
+                                                            <div style={{
+                                                                display: 'flex',
+                                                                flexWrap: 'wrap',
+                                                                marginTop: 5
+                                                            }}>
+                                                                {answers.map((answer, key) => {
+                                                                    return <PlaceHolder active={answer.wrong}
+                                                                                        borderColor={IN_ORDER_COLOR[key]}/>
+                                                                })}
+                                                            </div>
+                                                        </ItemLevel>
+                                                    </UIList.Item>
+                                                </div>
                                             }
                                         }
                                     </Subscribe>
@@ -130,12 +180,15 @@ const Index = () => {
                                     return <>
                                         <WrapperContent style={{width: '100%', background: 'white'}}>
                                             <ContentEditable
-                                                style={{flex: 1}}
-                                                onKeyPress={e => {
+                                                idAnswerFocus={idAnswerFocus}
+                                                idAnswer={'title'}
+                                                style={{flex: 1, color: "black"}}
+                                                onChange={(event, value) => levelSelect.setState({title: value})}
+                                                value={title}
+                                                onFocus={() => {
+                                                    setId('title')
                                                 }}
-                                                onChange={(event, value) => levelSelect.setState({title, value})}
-                                                html={title}
-                                                color="black"
+
                                             />
                                         </WrapperContent>
                                         <div style={{display: 'flex', margin: '10px'}}>
@@ -174,18 +227,22 @@ const Index = () => {
                                             </UILayout.Pane>
                                         </div>
                                         <WrapperAnswer>
+
+
                                             {answers.map((answer, key) => {
                                                 return <WrapperContent backgroundColor={IN_ORDER_COLOR[key]}>
                                                     <svg fill="white" width={32} height={32}
                                                          viewBox="0 0 32 32"> {ICONS[IN_ORDER_ICON[key]]}</svg>
                                                     <ContentEditable
-                                                        style={{flex: 10}}
-                                                        onKeyPress={e => {
+                                                        idAnswerFocus={idAnswerFocus}
+                                                        idAnswer={answer.id}
+                                                        onFocus={() => {
+                                                            setId(answer.id)
                                                         }}
-
+                                                        style={{flex: 10}}
                                                         onChange={(event, value) => levelSelect
                                                             .setDataQuestion('value', value, answer.id)}
-                                                        html={answer.value}
+                                                        value={answer.value}
 
                                                     />
                                                     <WrapperCheckBox>
@@ -203,7 +260,7 @@ const Index = () => {
                             }
                         </Subscribe>
                         }
-
+                        {/*< />*/}
                     </WrapperCreateQuestion>
                 </WrapperKahoot>
             }
